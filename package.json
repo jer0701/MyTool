@@ -1,0 +1,24 @@
+{
+  "name": "electron",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^1.4.13"
+  },
+  "dependencies": {
+    "async": "^2.6.0",
+    "body-parser": "^1.18.2",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.2",
+    "hbs": "^4.0.1",
+    "iconv-lite": "^0.4.19",
+    "imageinfo": "^1.0.4",
+    "images": "^3.0.0",
+    "through2": "^2.0.3",
+    "uglify-js": "^3.1.9"
+  }
+}
