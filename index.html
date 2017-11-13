@@ -14,9 +14,11 @@
       button{width:130px;height:34px;text-align:center;line-height:34px;font-size:16px;margin-right:10px;cursor:pointer;}
       textarea{width:60%;height:384px;}
       p{padding:20px;color:#ff0000;font-size:20px;}
-      .Dir{margin-top: -10px;}
-      #preCheck{width:128px;display:inline-block;height:32px;text-align:center;line-height:32px;font-size:16px;text-decoration:none;list-style-type:none;color:#ff0000;border:1px solid rgb(169, 169, 169);background-color:#ececec;margin-left:1px;vertical-align:3px;}
 
+      .selectFile {display:block;margin-top: -15px;width: 170px;}
+      .Dir{margin-top: -15px;}
+      #preCheck{width:128px;display:inline-block;height:32px;text-align:center;line-height:32px;font-size:16px;text-decoration:none;list-style-type:none;color:#ff0000;border:1px solid rgb(169, 169, 169);background-color:#ececec;margin-left:1px;vertical-align:3px;}
+      
     </style>
     <script src="js/jquery-1.7.2.min.js"></script>
   </head>
@@ -25,6 +27,7 @@
           <h3>
             选择需要打包的目录：
           </h3>
+          <button class="selectFile">选择文件</button>
           <div class="box Dir">
             <!-- <label><input name="path" type="radio" value="2017-08/2017-08-09-818" />2017-08/2017-08-09-818 </label> -->
           </div>
@@ -143,7 +146,7 @@
          return result;
       }
 
-      var init = function() {
+      var initFileDir = function() {
         getFileDir(function(fileDir){
           if(!fileDir) return;
 
@@ -202,7 +205,17 @@
 
         });
         
-      }();
+      };
+
+      var init = function() {
+        $(".selectFile").bind("click", initFileDir);
+      }
+
+      $(function () {
+
+          init();
+
+      })
 
     </script>
   </body>
