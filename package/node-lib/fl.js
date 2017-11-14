@@ -294,7 +294,6 @@ fl.mkHtml = function (options) {
         if(options.callback) options.callback();
         });
     };
-    console.log("yy"+options.tplpath);
     engine(options.tplpath,hbsOptions,done);
 };
 

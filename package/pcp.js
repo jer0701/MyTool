@@ -222,15 +222,17 @@ var packHtml = function (ztPath, cb) {
         callback: function () {
           //console.log("PC端" + ztPath + "专题已打包完成。");
           var ztPackedPath = path.normalize(cf.ztName + "/zt.html");
-          var ztHTML = fs.readFileSync(ztPackedPath);
-          if (ztHTML[0].toString(16).toLowerCase() == "ef" && ztHTML[1].toString(16).toLowerCase() == "bb" && ztHTML[2].toString(16).toLowerCase() == "bf") {
-                //EF BB BF
-                ztHTML = ztHTML.slice(3).toString();
-          }
+          var ztHTML = fs.readFileSync(ztPackedPath); 
           fs.writeFile('zt.html', ztHTML, (err) => {
                 if (err) throw err;
                 console.log("it's saved!");
           });
+          console.log(ztHTML[0]);
+          if (ztHTML[0].toString(16).toLowerCase() == "ef" && ztHTML[1].toString(16).toLowerCase() == "bb" && ztHTML[2].toString(16).toLowerCase() == "bf") {
+                //EF BB BF
+                ztHTML = ztHTML.slice(3).toString();
+          }
+
           cb(ztHTML);
         }
     });
