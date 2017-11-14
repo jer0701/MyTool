@@ -28,8 +28,7 @@ var getDir = function(filePath, zhuantiDir, callback) {
             if(!fs.existsSync(path.join(tempDir, "./js"))) return;
             if(!fs.existsSync(path.join(tempDir, "./images"))) return;
 
-            var temArr = tempDir.split(zhuantiDir + "\\");
-            callback(tempDir.split(zhuantiDir + "\\").pop(), info.birthtime.getTime()); //创建时间
+            callback(tempDir, tempDir.split(zhuantiDir + "\\").pop(), info.birthtime.getTime()); //创建时间
    
         }
         
@@ -51,8 +50,9 @@ var openDialog = function (callback){
 
 var savePath = function(arg, callback) {
     var fileDir = [];
-    getDir(arg, arg, function(dirStr, ctime) {
+    getDir(arg, arg, function(path, dirStr, ctime) {
             var dataJSON = {
+              path: path,
               dir: dirStr,
               ctime: ctime
             }

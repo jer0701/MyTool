@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>{{title}}</title>
+<link href="css/style.css" rel="stylesheet" />
+<script type="text/javascript">
+       !function (h) { function k() { var w = 640; var s = q.getBoundingClientRect().width; s / c > w && (s = w * c); var r = s / 10; q.style.fontSize = r + "px", e.rem = h.rem = r } var m, o = h.document, q = o.documentElement, a = o.querySelector('meta[name="viewport"]'), b = o.querySelector('meta[name="flexible"]'), c = 0, d = 0, e = {}, isAndroid = h.navigator.appVersion.match(/android/gi); if (a) { var f = a.getAttribute("content").match(/initial\-scale=([\d\.]+)/); f && (d = parseFloat(f[1]), c = parseInt(1 / d)) } else { if (b) { var g = b.getAttribute("content"); if (g) { var i = g.match(/initial\-dpr=([\d\.]+)/), j = g.match(/maximum\-dpr=([\d\.]+)/); i && (c = parseFloat(i[1]), d = parseFloat((1 / c).toFixed(2))), j && (c = parseFloat(j[1]), d = parseFloat((1 / c).toFixed(2))) } } } if (!c && !d) { var l = (h.navigator.appVersion.match(/android/gi), h.navigator.appVersion.match(/iphone/gi)), n = h.devicePixelRatio; c = l ? n >= 3 && (!c || c >= 3) ? 3 : n >= 2 && (!c || c >= 2) ? 2 : 1 : 1, d = 1 / c } if (q.setAttribute("data-dpr", c), !a) { if (a = o.createElement("meta"), a.setAttribute("name", "viewport"), a.setAttribute("content", "initial-scale=" + d + ", maximum-scale=" + d + ", minimum-scale=" + d + ", user-scalable=no"), q.firstElementChild) { q.firstElementChild.appendChild(a) } else { var p = o.createElement("div"); p.appendChild(a), o.write(p.innerHTML) } } h.addEventListener("resize", function () { clearTimeout(m), m = setTimeout(k, 10) }, !1), h.addEventListener("pageshow", function (r) { r.persisted && (clearTimeout(m), m = setTimeout(k, 300)) }, !1), "complete" === o.readyState ? o.body.style.fontSize = 12 * c + "px" : o.addEventListener("DOMContentLoaded", function () { o.body.style.fontSize = 12 * c + "px" }, !1), k(), e.dpr = h.dpr = c, e.refreshRem = k, e.rem2px = function (r) { var s = parseFloat(r) * this.rem; return "string" == typeof r && r.match(/rem$/) && (s += "px"), s }, e.px2rem = function (r) { var s = parseFloat(r) / this.rem; return "string" == typeof r && r.match(/px$/) && (s += "rem"), s }; h.addEventListener("load", function () { if (isAndroid) { var body = document.getElementsByTagName("body")[0]; var cls = body.className; body.className = (!cls ? "" : cls + " ") + "bd-android" } }) }(window);
+</script>
+
+<script src="js/libs.js"></script>
+<!--<script src="js/cssrefresh.js"></script>-->
+
+<style  type="text/css">
+    .zt-banner{height:{{bn.height}}px}
+    {{#each cns}}
+    .{{name}}{height:{{height}}px}
+    {{/each}}
+</style>
+
+
+</head>
+<body>
+
+
+
+    <div class="zt-container" id="zt-container">
+
+           <div class="zt-banner" >
+               <div class="imgcenter">
+                        {{#each bn.bgs}}
+                          <div><img src="{{this}}" /></div> 
+                        {{/each}}
+               </div>
+           </div>
+
+          {{#each cns}}
+               <div id="cn{{index}}" class="cn cn{{index}}" >
+                   <div class="bg">
+                        {{#each bgs}}
+                           <div><img src="{{this}}" /></div>
+                        {{/each}}
+                   </div>
+                   <div class="wrap">
+                       <div class="main">
+
+                       </div>
+                   </div>
+
+               </div>
+          {{/each}}
+    
+
+
+
+
+
+    </div>
+
+    <script src="js/my.js"></script>
+
+</body>
+</html>

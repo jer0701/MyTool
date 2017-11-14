@@ -18,6 +18,7 @@
       .selectFile {display:block;margin-top: -15px;width: 170px;}
       .Dir{margin-top: -15px;}
       #preCheck{width:128px;display:inline-block;height:32px;text-align:center;line-height:32px;font-size:16px;text-decoration:none;list-style-type:none;color:#ff0000;border:1px solid rgb(169, 169, 169);background-color:#ececec;margin-left:1px;vertical-align:3px;}
+      .path{display: none;}
       
     </style>
     <script src="js/jquery-1.7.2.min.js"></script>
@@ -52,6 +53,7 @@
     <script type="text/javascript">
       // You can also require other files to run in this process
       var getFileDir = require('./renderer.js');
+      var pcp = require('./package/pcp.js');
 
       //普通数组快速排序算法
       function swap(myArray, p1, p2) {
@@ -180,7 +182,7 @@
                 if(i == 0) { //重新开始循环，那么必然是进入新的月份
                   markM = 1;
                 }
-                            
+
                 var value = data[i].dir.split("\\"); 
                 var dirPath = value[0].split("-");
                 //console.log(value);
@@ -195,7 +197,7 @@
                   $(".Dir").append("<br>");
                 }
 
-                $(".Dir").append("<label><input name='path' type='radio' value='" + value[1] + "' />"+ value[1] +"</label>");                          
+                $(".Dir").append("<label><input name='path' type='radio' value='" + value[1] + "' />"+ value[1] +"<span class='path'>"+ data[i].path +"</span></label>");                    
 
               }
 
@@ -209,6 +211,20 @@
 
       var init = function() {
         $(".selectFile").bind("click", initFileDir);
+        //pcp打包
+        $("#pcp").bind("click", function(event) {
+            /* Act on the event */
+            var value  = $('input[name="path"]:checked').val();
+            
+            if (value) {
+              var $span = $('input[name="path"]:checked').siblings();
+              console.log($span.text());
+              pcp($span.text());
+
+            } else {
+              alert("请先选择需要打包的目录");
+            }
+        });
       }
 
       $(function () {
