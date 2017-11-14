@@ -55,6 +55,7 @@
       var getFileDir = require('./renderer.js');
       var pcp = require('./package/pcp.js');
       var mbp = require('./package/mbp.js');
+      var mbb = require('./package/mbb.js');
 
       //普通数组快速排序算法
       function swap(myArray, p1, p2) {
@@ -219,7 +220,6 @@
             
             if (value) {
               var $span = $('input[name="path"]:checked').siblings();
-              console.log($span.text());
               pcp($span.text());
 
             } else {
@@ -232,14 +232,25 @@
             
             if (value) {
               var $span = $('input[name="path"]:checked').siblings();
-              console.log($span.text());
               mbp($span.text());
 
             } else {
               alert("请先选择需要打包的目录");
             }
         });
-      }
+        $("#mbb").bind("click", function(event) {
+            /* Act on the event */
+            var value  = $('input[name="path"]:checked').val();
+            
+            if (value) {
+              var $span = $('input[name="path"]:checked').siblings();
+              mbb($span.text());
+
+            } else {
+              alert("请先选择需要打包的目录");
+            }
+        });
+        
 
       $(function () {
 
