@@ -135,12 +135,11 @@ var bindLzImg = function (htmlStr, cf) {
 //专题打包成html
 var packHtml = function (ztPath) {
     if(!ztPath) return;
-    var serverImgPath = ztPath + "/img.html";
     var cf = {
         //专题路径名
         ztName: ztPath,
         //服务器图片路径
-        serverImgPath: serverImgPath,
+        serverImgPath: ztPath + "/img.html",
 
         //pc端专题打包保存路径
         pcpSavePath: ztPath + "/zt.html"
