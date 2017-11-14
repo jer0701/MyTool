@@ -51,7 +51,6 @@ var bindLzImg = function (htmlStr, cf) {
         src = path.normalize(cf.ztName + "/" + src.split("?").shift());
         var image = nativeImage.createFromPath(src);
         var size = image.getSize();
-        console.log(size);
         //var size = images(src).size();
         var w = size.width;
         var h = size.height;
@@ -133,7 +132,7 @@ var bindLzImg = function (htmlStr, cf) {
 
 
 //专题打包成html
-var packHtml = function (ztPath) {
+var packHtml = function (ztPath, cb) {
     if(!ztPath) return;
     var cf = {
         //专题路径名
@@ -221,7 +220,18 @@ var packHtml = function (ztPath) {
 
         datas: datas,
         callback: function () {
-            console.log("PC端" + ztPath + "专题已打包完成。");
+          //console.log("PC端" + ztPath + "专题已打包完成。");
+          var ztPackedPath = path.normalize(cf.ztName + "/zt.html");
+          var ztHTML = fs.readFileSync(ztPackedPath);
+          if (ztHTML[0].toString(16).toLowerCase() == "ef" && ztHTML[1].toString(16).toLowerCase() == "bb" && ztHTML[2].toString(16).toLowerCase() == "bf") {
+                //EF BB BF
+                ztHTML = ztHTML.slice(3).toString();
+          }
+          fs.writeFile('zt.html', ztHTML, (err) => {
+                if (err) throw err;
+                console.log("it's saved!");
+          });
+          cb(ztHTML);
         }
     });
 

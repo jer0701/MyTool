@@ -43,7 +43,7 @@
           <div class="box">
             <button id="copy" >复制代码</button>
             <button id="clear">清空</button> 
-            <a href="zt" target="_blank" id="preCheck">预览PC</a>
+            <a href="zt.html" target="_blank" id="preCheck">预览PC</a>
           </div>
           <pre>﻿<textarea id="copy-content"></textarea></pre>
           <p></p>
@@ -220,7 +220,9 @@
             
             if (value) {
               var $span = $('input[name="path"]:checked').siblings();
-              pcp($span.text());
+              pcp($span.text(), function(ztHTML){
+                $('textarea').text(ztHTML);
+              });
 
             } else {
               alert("请先选择需要打包的目录");
@@ -250,7 +252,21 @@
               alert("请先选择需要打包的目录");
             }
         });
-        
+        //清空按钮
+        $("#clear").bind("click", function(event) {
+          /* Act on the event */
+          $('textarea').text("");
+
+        });
+
+        //复制按钮
+        $("#copy").bind("click", function(event) {
+          /* Act on the event */
+          var copyobject=document.getElementById("copy-content");
+          copyobject.select();
+          document.execCommand("Copy");
+        });
+      }
 
       $(function () {
 
