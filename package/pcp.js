@@ -17,7 +17,7 @@ $.prototype.options.decodeEntities = false;
 
 
 //绑定图片懒加载
-var bindLzImg = function (htmlStr, ztPath) {
+var bindLzImg = function (htmlStr, cf) {
 
     var $divBox = $("<div/>").html(htmlStr);
     var $ztContainer = $divBox.find(".zt-container");
@@ -48,9 +48,10 @@ var bindLzImg = function (htmlStr, ztPath) {
         var $that = $(this);
         var src = $that.data(attr) || $that.attr("src");
         var _src = src;
-        src = path.join(__dirname, ztPath + "/" + src.split("?").shift());
+        src = path.normalize(cf.ztName + "/" + src.split("?").shift());
         var image = nativeImage.createFromPath(src);
-        var size = image(src).getSize();
+        var size = image.getSize();
+        console.log(size);
         //var size = images(src).size();
         var w = size.width;
         var h = size.height;
@@ -178,7 +179,7 @@ var packHtml = function (ztPath) {
 
     //图片懒加载处理
     if (cf.pcLzImg) {
-        datas.html = bindLzImg(datas.html, ztPath);
+        datas.html = bindLzImg(datas.html, cf);
     }
 
     //替换为服务器路径
