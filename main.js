@@ -6,6 +6,8 @@ const BrowserWindow = electron.BrowserWindow
 
 const path = require('path')
 const url = require('url')
+const ipcMain = electron.ipcMain;
+const shell = electron.shell;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -13,7 +15,7 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1200, height: 600})
+  mainWindow = new BrowserWindow({width: 1200, height: 600, show: false})
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -32,6 +34,13 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
+  mainWindow.once('ready-to-show', function() {
+        mainWindow.show()
+        //主进程发送消息给渲染进程
+        mainWindow.webContents.send('ready', 'main-process-ready show')
+  })
+
 }
 
 // This method will be called when Electron has finished
@@ -58,3 +67,9 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+ 
+ipcMain.on('loadurl-message', function(event, arg) {
+    var filePath = path.join(__dirname, arg);
+    console.log(filePath)
+    shell.openExternal(filePath);
+});

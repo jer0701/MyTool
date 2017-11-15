@@ -43,7 +43,7 @@
           <div class="box">
             <button id="copy" >复制代码</button>
             <button id="clear">清空</button> 
-            <a href="zt.html" target="_blank" id="preCheck">预览PC</a>
+            <a href="#" id="preCheck">预览PC</a>
           </div>
           <pre>﻿<textarea id="copy-content"></textarea></pre>
           <p></p>
@@ -56,6 +56,7 @@
       var pcp = require('./package/pcp.js');
       var mbp = require('./package/mbp.js');
       var mbb = require('./package/mbb.js');
+      const ipcRenderer = require('electron').ipcRenderer;
 
       //普通数组快速排序算法
       function swap(myArray, p1, p2) {
@@ -266,11 +267,18 @@
           copyobject.select();
           document.execCommand("Copy");
         });
+
+        $("#preCheck").bind("click", function(event) {
+          /* Act on the event */
+          ipcRenderer.send("loadurl-message","zt.html");
+          
+        });
       }
 
       $(function () {
 
           init();
+          
 
       })
 
