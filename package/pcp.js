@@ -225,9 +225,8 @@ var packHtml = function (ztPath, cb) {
           var ztHTML = fs.readFileSync(ztPackedPath); 
           fs.writeFile('zt.html', ztHTML, (err) => {
                 if (err) throw err;
-                console.log("it's saved!");
+                console.log("it's save to zt.html");
           });
-          console.log(ztHTML[0]);
           if (ztHTML[0].toString(16).toLowerCase() == "ef" && ztHTML[1].toString(16).toLowerCase() == "bb" && ztHTML[2].toString(16).toLowerCase() == "bf") {
                 //EF BB BF
                 ztHTML = ztHTML.slice(3).toString();

@@ -186,8 +186,8 @@
                   markM = 1;
                 }
 
-                var value = data[i].dir.split("\\"); 
-                var dirPath = value[0].split("-");
+                var value = data[i].dir; 
+                var dirPath = value.split("-");
                 //console.log(value);
                 if (dirPath[0] != yearArr[y]) continue;
                 if (dirPath[1] != monthArr[m]) continue;
@@ -200,7 +200,7 @@
                   $(".Dir").append("<br>");
                 }
 
-                $(".Dir").append("<label><input name='path' type='radio' value='" + value[1] + "' />"+ value[1] +"<span class='path'>"+ data[i].path +"</span></label>");                    
+                $(".Dir").append("<label><input name='path' type='radio' value='" + value + "' />"+ value +"<span class='path'>"+ data[i].path +"</span></label>");                    
 
               }
 
