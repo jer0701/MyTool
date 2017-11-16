@@ -210,7 +210,12 @@ var init = function() {
 
     if (value) {
       var $span = $('input[name="path"]:checked').siblings();
-      mbp($span.text(), function(){
+      var ztpath = $span.text() + "-mb";
+      if(!fs.existsSync(path.normalize(ztpath))) {
+        alert("选择的移动端目录不存在");
+        return
+      }
+      mbp(ztpath, function(){
         $("p").text("移动端" + value + "打包成功");
       });
 
@@ -224,7 +229,12 @@ var init = function() {
 
     if (value) {
       var $span = $('input[name="path"]:checked').siblings();
-      mbb($span.text(), function() {
+      var ztpath = $span.text() + "-mb";
+      if(!fs.existsSync(path.normalize(ztpath))) {
+        alert("选择的移动端目录不存在");
+        return
+      }
+      mbb(ztpath, function() {
         $("p").text("移动端" + value + "恢复成功");
       });
 
