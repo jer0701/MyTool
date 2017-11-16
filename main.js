@@ -18,7 +18,7 @@ loadJS()
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1200, minWidth: 680, height: 600, show: false})
+  mainWindow = new BrowserWindow({width: 1200, minWidth: 720, height: 600, show: false})
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -78,6 +78,17 @@ ipcMain.on('loadurl-message', function(event, arg) {
     }
     
 })
+ipcMain.on('Home', function(event, arg) {
+    require(path.join(__dirname, 'main-process/menus/application-menu.js'))();
+    mainWindow.loadURL(url.format({
+      pathname: path.join(__dirname, 'index.html'),
+      protocol: 'file:',
+      slashes: true
+    }))
+
+    
+})
+
 function loadJS () {
   var files = glob.sync(path.join(__dirname, 'main-process/**/*.js'))
   files.forEach(function (file) {
