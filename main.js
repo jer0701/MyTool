@@ -6,16 +6,19 @@ const BrowserWindow = electron.BrowserWindow
 
 const path = require('path')
 const url = require('url')
-const ipcMain = electron.ipcMain;
-const shell = electron.shell;
+const ipcMain = electron.ipcMain
+const shell = electron.shell
+const glob = require('glob')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
+loadJS()
+
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1200, height: 600, show: false})
+  mainWindow = new BrowserWindow({width: 1200, minWidth: 680, height: 600, show: false})
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -40,6 +43,7 @@ function createWindow () {
         //主进程发送消息给渲染进程
         mainWindow.webContents.send('ready', 'main-process-ready show')
   })
+
 
 }
 
@@ -73,4 +77,10 @@ ipcMain.on('loadurl-message', function(event, arg) {
       shell.openExternal(arg);
     }
     
-});
+})
+function loadJS () {
+  var files = glob.sync(path.join(__dirname, 'main-process/**/*.js'))
+  files.forEach(function (file) {
+    require(file)
+  })
+}
