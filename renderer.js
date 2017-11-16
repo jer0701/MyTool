@@ -27,7 +27,7 @@ var getDir = function(filePath, zhuantiDir, callback) {
             if(!fs.existsSync(path.join(tempDir, "./css"))) return;
             if(!fs.existsSync(path.join(tempDir, "./js"))) return;
             if(!fs.existsSync(path.join(tempDir, "./images"))) return;
-            console.log(tempDir.split("\\").pop());
+            //console.log(tempDir.split("\\").pop());
             callback(tempDir, tempDir.split("\\").pop(), info.birthtime.getTime()); //创建时间
    
         }
@@ -41,10 +41,9 @@ var openDialog = function (callback){
             'openFile', 'openDirectory'
         ]
     },function(res){
-        console.log(res[0]); //数组中只有一个值，因为没有多选
-        callback(null, path.normalize(res[0]));
+        //console.log(res[0]); //数组中只有一个值，因为没有多选
+        if(res) callback(null, path.normalize(res[0]));
      
-
     })
 }
 

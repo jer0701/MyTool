@@ -151,6 +151,27 @@
          return result;
       }
 
+      //格式化时间格式如："yyyy-MM-dd HH:mm:ss" ["2017-11-01 09:38:30"]
+      var formatDate = function (Date, format) {
+        format = format || "yyyy-MM-dd HH:mm:ss";
+
+        var o = {
+          "yyyy": Date.getFullYear(),
+          "MM": Date.getMonth() + 1, //month
+          "dd": Date.getDate(), //day
+          "HH": Date.getHours(), //hour
+          "mm": Date.getMinutes(), //minute
+          "ss": Date.getSeconds(), //second
+          "SS": Date.getMilliseconds() //millisecond
+        }
+        for (var i in o) {
+          if ((o[i] + "").length < 2) o[i] = "0" + o[i];
+          format = format.replace(i, o[i]);
+        }
+
+        return format;
+    };
+
       var initFileDir = function() {
         getFileDir(function(fileDir){
           if(!fileDir) return;
@@ -163,13 +184,15 @@
           if(!length) return;
                  
           //获取文件夹创建的年份和月份（通过文件夹的命名来获取）
-          var yearArr = [];
-          var monthArr = [];
+          var yearArr = [],
+              monthArr = [],
+              ctime, //临时变量存储文件夹的创建时间
+              dirpath; //临时变量存储文件夹的创建的年份和月份
           for (var i = 0; i < length; i++) {
-            var dirName = data[i].dir.split("\\");
-            var dir = dirName[0].split("-");
-            yearArr.push(dir[0]);
-            monthArr.push(dir[1]);
+            ctime = formatDate(new Date(data[i].ctime)).split(" ");
+            dirpath = ctime[0].split("-");
+            yearArr.push(dirpath[0]);
+            monthArr.push(dirpath[1]);
                       
           }
 
@@ -186,8 +209,9 @@
                   markM = 1;
                 }
 
-                var value = data[i].dir; 
-                var dirPath = value.split("-");
+                var value = data[i].dir;
+                ctime = formatDate(new Date(data[i].ctime)).split(" ");
+                dirPath = ctime[0].split("-");
                 //console.log(value);
                 if (dirPath[0] != yearArr[y]) continue;
                 if (dirPath[1] != monthArr[m]) continue;
