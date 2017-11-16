@@ -15,7 +15,7 @@ var config = require("./zt-config");
 $.prototype.options.decodeEntities = false;
 
 
-var mbp = function(ztPath) {
+var mbp = function(ztPath, callback) {
     if(!ztPath) return;
     var cf = {
         //专题路径名
@@ -206,10 +206,6 @@ var mbp = function(ztPath) {
     };
 
 
-    //打包回调
-    var callback = function () {
-        console.log("移动端 " + cf.ztName + " 专题已打包完成");
-    };
 
 
     //打包

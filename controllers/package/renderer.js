@@ -208,7 +208,9 @@ var init = function() {
 
     if (value) {
       var $span = $('input[name="path"]:checked').siblings();
-      mbp($span.text());
+      mbp($span.text(), function(){
+        $("p").text("移动端" + value + "打包成功");
+      });
 
     } else {
       alert("请先选择需要打包的专题目录");
@@ -220,7 +222,9 @@ var init = function() {
 
     if (value) {
       var $span = $('input[name="path"]:checked').siblings();
-      mbb($span.text());
+      mbb($span.text(), function(){
+        $("p").text("移动端" + value + "恢复成功");
+      });
 
     } else {
       alert("请先选择需要恢复的专题目录");

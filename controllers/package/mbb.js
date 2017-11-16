@@ -12,7 +12,7 @@ var config = require("./zt-config");
 $.prototype.options.decodeEntities = false;
 
 
-var mbb = function(ztPath) {
+var mbb = function(ztPath, callback) {
     if(!ztPath) return;
     var cf = {
         //专题路径名
@@ -83,7 +83,7 @@ var mbb = function(ztPath) {
 
         fs.writeFile(htmlPath, htmlStr, (err) => {
             if (err) throw err;
-            console.log("移动端 " + cf.ztName + " 专题已恢复");
+            callback();
         });
 
     };
