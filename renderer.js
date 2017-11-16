@@ -69,6 +69,7 @@ module.exports = function(callback) {
         openDialog,
         savePath
     ], function (err, result) {
+        if(err) return;
         callback(result);
     });
 }

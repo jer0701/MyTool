@@ -69,7 +69,8 @@ app.on('activate', function () {
 // code. You can also put them in separate files and require them here.
  
 ipcMain.on('loadurl-message', function(event, arg) {
-    var filePath = path.join(__dirname, arg);
-    console.log(filePath)
-    shell.openExternal(filePath);
+    if(arg) {
+      shell.openExternal(arg);
+    }
+    
 });

@@ -57,6 +57,8 @@
       var mbp = require('./package/mbp.js');
       var mbb = require('./package/mbb.js');
       const ipcRenderer = require('electron').ipcRenderer;
+      const fs = require('fs');
+      const path = require('path');
 
       //普通数组快速排序算法
       function swap(myArray, p1, p2) {
@@ -175,13 +177,13 @@
       var initFileDir = function() {
         getFileDir(function(fileDir){
           if(!fileDir) return;
-
           //给data数组按照创建时间从最近到最远排列
           var data = quickSortJSON(fileDir);
           //$('textarea').text(data[0].dir);
                 
           var length = data.length;
           if(!length) return;
+          $(".Dir").html("");
                  
           //获取文件夹创建的年份和月份（通过文件夹的命名来获取）
           var yearArr = [],
@@ -250,7 +252,7 @@
               });
 
             } else {
-              alert("请先选择需要打包的目录");
+              alert("请先选择需要打包的专题目录");
             }
         });
         $("#mbp").bind("click", function(event) {
@@ -262,7 +264,7 @@
               mbp($span.text());
 
             } else {
-              alert("请先选择需要打包的目录");
+              alert("请先选择需要打包的专题目录");
             }
         });
         $("#mbb").bind("click", function(event) {
@@ -274,7 +276,7 @@
               mbb($span.text());
 
             } else {
-              alert("请先选择需要打包的目录");
+              alert("请先选择需要恢复的专题目录");
             }
         });
         //清空按钮
@@ -294,7 +296,22 @@
 
         $("#preCheck").bind("click", function(event) {
           /* Act on the event */
-          ipcRenderer.send("loadurl-message","zt.html");
+          var value  = $('input[name="path"]:checked').val();
+            
+          if (value) {
+            var $span = $('input[name="path"]:checked').siblings();
+            var PreviewPath = path.join($span.text(), "./zt.html");
+            console.log(PreviewPath);
+            if(!fs.existsSync(PreviewPath)) {
+              alert("zt.html不存在，请先选择打包该专题");
+              return;
+            };
+            console.log(PreviewPath);
+            ipcRenderer.send("loadurl-message", PreviewPath);
+
+          } else {
+              alert("请先选择预览的专题目录");
+          } 
           
         });
       }
