@@ -15,7 +15,7 @@ var config = require("./zt-config");
 //$.prototype.options.decodeEntities = false;
 
 
-var mbp = function(ztPath, callback) {
+var mbp = function(ztPath, settings, callback) {
     if(!ztPath) return;
     var cf = {
         //专题路径名
@@ -27,8 +27,14 @@ var mbp = function(ztPath, callback) {
         pcpSavePath: ztPath + "/zt.html"
     }
 
-    for(var i in config) {
-        cf[i] = config[i];
+    for (var i in config) {
+        if(cf[i] === undefined) {
+            cf[i] = config[i];
+        }
+    }
+    
+    for(var i in settings) {
+        cf[i] = settings[i];
     }
 
     //默认为PC端专题名称 移动端则加-mb

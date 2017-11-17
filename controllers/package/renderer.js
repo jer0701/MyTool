@@ -7,8 +7,8 @@ const Menu = electron.remote.Menu;
 var getFileDir = require('./../../controllers/package/getDir.js'),
   pcp = require('./../../controllers/package/pcp.js'),
   mbp = require('./../../controllers/package/mbp.js'),
-  mbb = require('./../../controllers/package/mbb.js');
-
+  mbb = require('./../../controllers/package/mbb.js'),
+  settings = {};
 
 //普通数组快速排序算法
 function swap(myArray, p1, p2) {
@@ -195,8 +195,9 @@ var init = function() {
     var value = $('input[name="path"]:checked').val();
 
     if (value) {
+      getSettings();
       var $span = $('input[name="path"]:checked').siblings();
-      pcp($span.text(), function(ztHTML) {
+      pcp($span.text(), settings, function(ztHTML) {
         $('textarea').text(ztHTML);
       });
 
@@ -209,13 +210,15 @@ var init = function() {
     var value = $('input[name="path"]:checked').val();
 
     if (value) {
+      getSettings();
       var $span = $('input[name="path"]:checked').siblings();
       var ztpath = $span.text() + "-mb";
       if(!fs.existsSync(path.normalize(ztpath))) {
         alert("选择的移动端目录不存在");
         return
       }
-      mbp(ztpath, function(){
+
+      mbp(ztpath, settings, function(){
         $("p").text("移动端" + value + "打包成功");
       });
 
@@ -228,13 +231,15 @@ var init = function() {
     var value = $('input[name="path"]:checked').val();
 
     if (value) {
+      getSettings();
       var $span = $('input[name="path"]:checked').siblings();
       var ztpath = $span.text() + "-mb";
       if(!fs.existsSync(path.normalize(ztpath))) {
         alert("选择的移动端目录不存在");
         return
       }
-      mbb(ztpath, function() {
+      
+      mbb(ztpath, settings, function() {
         $("p").text("移动端" + value + "恢复成功");
       });
 
@@ -374,13 +379,45 @@ function setMenu() {
     }]
   }, {
     label: '设置',
+    submenu:[{
+      label: 'PC懒加载', type: 'checkbox', key: 'pcLzImg', checked: true 
+    }, {
+      label: 'MB懒加载', type: 'checkbox', key: 'mbLzImg', checked: true 
+    }],
     click: function() {
-        alert("nothing to set");
+        //alert("nothing to set");
       }
   }]
 
   var menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
+}
+
+var getSettings = function(){
+  var menu = Menu.getApplicationMenu();
+  if (!menu) return;
+
+  menu.items.forEach(function (item) {
+    if (item.submenu) {
+      item.submenu.items.forEach(function (item) {
+        if (item.key === 'pcLzImg') {
+          if(!item.checked) {
+            settings.pcLzImg = false;
+          } else {
+            settings.pcLzImg = true;
+          }
+        }
+        if (item.key === 'mbLzImg') {
+          if(!item.checked) {
+            settings.mbLzImg = false;
+          } else {
+            settings.mbLzImg = true;
+          }
+        }
+
+      })
+    }
+  })
 }
 
 $(function() {

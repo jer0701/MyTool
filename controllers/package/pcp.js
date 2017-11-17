@@ -132,7 +132,7 @@ var bindLzImg = function (htmlStr, cf) {
 
 
 //专题打包成html
-var packHtml = function (ztPath, cb) {
+var packHtml = function (ztPath, settings, cb) {
     if(!ztPath) return;
     var cf = {
         //专题路径名
@@ -145,7 +145,13 @@ var packHtml = function (ztPath, cb) {
     }
 
     for(var i in config) {
-        cf[i] = config[i];
+        if(cf[i] === undefined) {
+            cf[i] = config[i];
+        }
+    }
+
+    for(var i in settings) {
+        cf[i] = settings[i];
     }
     
     if (!fs.existsSync(cf.serverImgPath)){
