@@ -1,10 +1,11 @@
 {
   "name": "electron",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron main.js"
+    "start": "electron main.js",
+    "packageWin": "electron-packager . tools --win --out release --arch=x64 --electron-version=1.4.13 --overwrite --icon=tools.ico"
   },
   "devDependencies": {
     "electron-prebuilt": "^1.4.13"

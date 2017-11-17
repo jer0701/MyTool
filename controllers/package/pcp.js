@@ -12,7 +12,7 @@ var $ = require('cheerio');
 var config = require("./zt-config");
 
 //解决 html中文字符 编码问题
-$.prototype.options.decodeEntities = false;
+//$.prototype.options.decodeEntities = false;
 
 
 

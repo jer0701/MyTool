@@ -12,7 +12,7 @@ var cf = {};
 cf.mbLzImg = true;
 
 //pc端专题打包 是否懒加载图片
-cf.pcLzImg = true;
+cf.pcLzImg = false;
 
 //图片懒加载源属性 data- 形式 original
 cf.lzImgAttr ="original";
