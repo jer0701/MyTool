@@ -1,2 +1,19 @@
-1.´ò°ü³ÉexeµÄÊ±ºòÒª¿ª´úÀí£¬²»È»±¨Á¬½Ó´íÎó
-2.¿ª·¢µÄÊ±ºòÄ£¿é¶¼¿ÉÒÔÊ¹ÓÃÌÔ±¦¾µÏñ£¨cnpm£©ÏÂÔØ£¬µ«ÊÇ´ò°ü³ÉexeµÄÊ±ºò×îºÃÉ¾³ınode_modulesÄ£¿é£¬Ê¹ÓÃnpmÖØĞÂÏÂÔØ£¬²»È»´ò°ü³öÀ´µÄexe×ÜÊÇ»á±¨Ä£¿éÈ±Ê§
+1.æ‰“åŒ…æˆexeçš„æ—¶å€™è¦å¼€ä»£ç†ï¼Œä¸ç„¶æŠ¥è¿æ¥é”™è¯¯
+2.å¼€å‘çš„æ—¶å€™æ¨¡å—éƒ½å¯ä»¥ä½¿ç”¨æ·˜å®é•œåƒï¼ˆcnpmï¼‰ä¸‹è½½ï¼Œä½†æ˜¯æ‰“åŒ…æˆexeçš„æ—¶å€™æœ€å¥½åˆ é™¤node_modulesæ¨¡å—ï¼Œä½¿ç”¨npmé‡æ–°ä¸‹è½½ï¼Œä¸ç„¶æ‰“åŒ…å‡ºæ¥çš„exeæ€»æ˜¯ä¼šæŠ¥æ¨¡å—ç¼ºå¤±
+
+æŠŠç”Ÿæˆçš„exeæ–‡ä»¶æ‰€æœ‰æ–‡ä»¶æ”¾å…¥buildç›®å½•ä¸­
+
+3.æ‰“åŒ…æˆwindows installæ–‡ä»¶ï¼š
+éœ€è¦squirrel.exe (https://github.com/Squirrel/Squirrel.Windows/releasesï¼‰
+    nuget.exe (http://www.nuget.org/nuget.exe)
+
+    buildç›®å½•æ‰§è¡Œå‘½ä»¤nuget specç”ŸæˆPackage.nuspecæ–‡ä»¶ï¼Œæ ¹æ®é¡¹ç›®é…ç½®è¿™ä¸ªæ–‡ä»¶
+
+    ç„¶åç”¨ä¸‹é¢çš„å‘½ä»¤åˆ›å»ºä¸€ä¸ªnugetåŒ…ï¼Œ
+    nuget pack Package.nuspec
+
+
+å®‰è£…grunt-electron-installer
+é…ç½®gruntfile.js
+
+æ‰§è¡Œgrunt create-windows-installer
