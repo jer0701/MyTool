@@ -5,10 +5,11 @@
   "main": "main.js",
   "scripts": {
     "start": "electron main.js",
-    "packageWin": "electron-packager . tools --win --out prebuild --arch=x64 --electron-version=1.4.13 --overwrite --icon=tools.ico"
+    "packageWin": "electron-packager . tools --win --out prebuild --arch=x64 --electron-version=1.4.13 --overwrite --icon=assets/img/tools.ico"
   },
   "devDependencies": {
     "electron-prebuilt": "^1.4.13",
+    "electron-winstaller": "^2.6.3",
     "grunt": "^1.0.1",
     "grunt-electron-installer": "^2.1.0"
   },
