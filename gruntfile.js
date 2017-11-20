@@ -10,6 +10,14 @@ grunt.config.init({
 			outputDirectory:'/Users/flnet8888/Desktop/Front_End/Electron/MyTool/release',
 			exe:'tools.exe',
 			description:'tools'
+		},
+		ia32: {
+			version:'1.0.1',
+			authors:'flnet',
+			appDirectory:'/Users/flnet8888/Desktop/Front_End/Electron/MyTool/build',
+			outputDirectory:'/Users/flnet8888/Desktop/Front_End/Electron/MyTool/release',
+			exe:'tools.exe',
+			description:'tools'
 		}
 	}
 });
