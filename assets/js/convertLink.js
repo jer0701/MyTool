@@ -132,6 +132,11 @@ $(function () {
         store.set("tbHtml", "");
         store.set("ztHtml","");
     })
+    $("#copy").bind("click", function () {
+        var copyobject = document.getElementById("converHtml");
+        copyobject.select();
+        document.execCommand("Copy");
+    })
 
     $("#conver").bind("click", function () {
 
@@ -153,7 +158,7 @@ $(function () {
            
             return;
         }
-        console.log(tbData);
+        //console.log(tbData);
         var aSelector = $("#aSelector").val() || "a";
         var $msg = $("#msg");
         var $ztBox = $("<div/>");
