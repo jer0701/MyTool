@@ -3,14 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <title>Tools</title>
+  <link rel="stylesheet" type="text/css" href="./assets/libs/font-awesome/css/font-awesome.min.css">
   <style type="text/css">
-  	a{
-  		width:128px;display:inline-block;height:32px;text-align:center;line-height:32px;font-size:16px;text-decoration:none;list-style-type:none;color:#ff0000;border:1px solid rgb(169, 169, 169);background-color:#ececec;margin-left:1px;vertical-align:3px;	
-  	}
+  	*{margin:0;padding:0;}
+  	.content{width: 500px;height: 100px; margin:180px auto;font-size: 0px;text-align: justify;text-justify: distribute-all-lines;}
+    .content:after {content: "";width: 100%;display: inline-block;}
+  	a{width:120px; text-decoration: none;display: inline-block;color: #555;border: 5px #777 ridge;padding:30px 30px;webkit-transition: all 0.3s ease;-moz-transition: all 0.3s ease;-ms-transition: all 0.3s ease;-o-transition: all 0.3s ease;transition: all 0.3s ease;font-size: 14px;text-align: center;}
+  	i {margin-right: 10px;}
+  	a:hover {color: #000;border: 5px #000 ridge;}
   </style>
 </head>
 <body>
-	<a href="./views/package/index.html">专题打包</a>
-	<a href="./views/convertLink/index.html">专题链接转换</a>
+	<div class="content">
+		<a href="./views/package/index.html"><i class="fa fa-file-zip-o"></i>专题打包</a>
+		<a href="./views/convertLink/index.html"><i class="fa fa-tag"></i>专题链接转换</a>
+	</div>
 </body>
 </html>
