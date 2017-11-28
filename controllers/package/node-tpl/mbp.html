@@ -1,23 +1,13 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<!-- <meta name="viewport" content="width=device-width,initial-scale=0.5, minimum-scale=0.5, maximum-scale=0.5, user-scalable=no" /> -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>vivo 品牌周 - 富连网</title>
-<link href="css/style.css?v5" rel="stylesheet">
-<script type="text/javascript">
-;(function (k) { var i = 640; var f; var q = 0; var p = k.document; var b = p.documentElement; var n = p.querySelector('meta[name="viewport"]'); var e = p.querySelector('meta[name="flexible"]'); var h = function () { return !(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) }(); var d = h ? 1 : 0.5; var j = function (r) { n.setAttribute("name", "viewport"); n.setAttribute("content", "initial-scale=" + r + ", maximum-scale=" + r + ", minimum-scale=" + r + ", user-scalable=no") }; function m() { var r = b.getBoundingClientRect().width; if (r / q > i) { r = i * q } b.style.fontSize = (r / 10) + "px" } if (!n) { n = p.createElement("meta"); j(d); if (b.firstElementChild) { b.firstElementChild.appendChild(n) } else { var a = p.createElement("div"); a.appendChild(n); p.write(a.innerHTML) } } if (n) { var g = n.getAttribute("content").match(/initial-scale=([d.]+)/); if (g) { d = parseFloat(g[1]) } q = parseInt(1 / d); if (h && d != 1) { q = d = 1; j(1) } } if (!q && !d) { var l = k.navigator.appVersion.match(/android/gi); var c = k.navigator.appVersion.match(/iphone/gi); var o = k.devicePixelRatio; if (c) { if (o >= 3 && (!q || q >= 3)) { q = 3 } else { if (o >= 2 && (!q || q >= 2)) { q = 2 } else { q = 1 } } } else { q = 1 } d = 1 / q } b.setAttribute("data-dpr", q); k.addEventListener("resize", function () { clearTimeout(f); f = setTimeout(m, 1) }, false); k.addEventListener("pageshow", function (r) { if (r.persisted) { clearTimeout(f); f = setTimeout(m, 1) } }, false); if (p.readyState === "complete") { p.body.style.fontSize = 12 * q + "px" } else { p.addEventListener("DOMContentLoaded", function (r) { p.body.style.fontSize = 12 * q + "px" }, false) } m() })(window);
-</script>
-
-<script src="js/libs.js"></script>
+{{{head}}}
 
 </head>
 
 <body>
 
-
-
-
+{{{body}}}
 
 </body>
 </html>

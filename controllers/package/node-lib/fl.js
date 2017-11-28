@@ -141,9 +141,24 @@ fl.getZtHtml = function (html) {
 
     return str;
 }
+/*
+* 获取专题 head
+* @param {string} path 目录
+*/
+fl.getZtHead = function (html) {
+
+    var str = "";
+    html.replace(/<head>\s*([\s\S]*)\s*<\/head>/, function ($0, $1) {
+        str = $1;
+        return $1;
+    });
+    console.log("html"+ html);
+    console.log("yy"+ str);
+    return str;
+}
 
 /**
-* 
+*
 * 将本地图片替换为服务器图片
 *
 * @param {string} str html字符串
@@ -272,7 +287,7 @@ fl.mkHtml = function (options) {
     for(var o in defaults){
         if(options[o]===undefined){
             options[o]=defaults[o];
-        }	
+        }
     }
 
     var datas= options.datas;
@@ -285,7 +300,7 @@ fl.mkHtml = function (options) {
 
     }
 
- 
+
     var engine = hbs.__express;
     var done = function(x,str){
         //console.log(str);

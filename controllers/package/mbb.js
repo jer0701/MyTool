@@ -1,6 +1,6 @@
 ﻿/**
  *  恢复打包移动端专题
- *  
+ *
  */
 
 var fl = require("./node-lib/fl");
@@ -16,12 +16,7 @@ var mbb = function(ztPath, settings, callback) {
     if(!ztPath) return;
     var cf = {
         //专题路径名
-        ztName: ztPath,
-        //服务器图片路径
-        serverImgPath: ztPath + "/img.html",
-
-        //pc端专题打包保存路径
-        pcpSavePath: ztPath + "/zt.html"
+        ztName: ztPath
     }
 
     for (var i in config) {
@@ -59,11 +54,14 @@ var mbb = function(ztPath, settings, callback) {
 
     //恢复原来html
     var unPackHtml = function () {
-
+        var datas = {
+        };
         // html文件打包
         var htmlPath = cf.ztName + "/index.html";
         var htmlStr = fs.readFileSync(htmlPath, 'utf8');
-        var $divBox = $("<div/>").html(htmlStr);
+        datas.head = fl.getZtHead(htmlStr);
+        datas.body = fl.getZtHtml(htmlStr);
+        var $divBox = $("<div/>").html(datas.body);
         var $ztContainer = $divBox.find(".zt-container");
         var $imgs = $('img', $ztContainer);
 
@@ -85,10 +83,26 @@ var mbb = function(ztPath, settings, callback) {
         });
 
         htmlStr = $divBox.html();
+        datas.body = htmlStr;
 
-        fs.writeFile(htmlPath, htmlStr, (err) => {
-            if (err) throw err;
-            callback();
+        //生成专题
+        fl.mkHtml({
+
+            //hbs模板 视图路径 本函数实际没有用到 但不写会报错
+            views: path.join(__dirname, cf.viewsPath),
+
+            //打包文件模板路径
+            tplpath: path.join(__dirname, cf.mbpTplPath),
+
+            //打包文件保存路径
+            savepath: path.normalize(htmlPath),
+
+
+            datas: datas,
+            callback: function () {
+              //console.log("PC端" + ztPath + "专题已恢复");
+              callback && callback();
+            }
         });
 
     };

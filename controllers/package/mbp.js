@@ -1,7 +1,7 @@
 ﻿
 /**
  *  打包移动端专题
- *  
+ *
  */
 
 var path = require('path');
@@ -19,12 +19,7 @@ var mbp = function(ztPath, settings, callback) {
     if(!ztPath) return;
     var cf = {
         //专题路径名
-        ztName: ztPath,
-        //服务器图片路径
-        serverImgPath: ztPath + "/img.html",
-
-        //pc端专题打包保存路径
-        pcpSavePath: ztPath + "/zt.html"
+        ztName: ztPath
     }
 
     for (var i in config) {
@@ -32,7 +27,7 @@ var mbp = function(ztPath, settings, callback) {
             cf[i] = config[i];
         }
     }
-    
+
     for(var i in settings) {
         cf[i] = settings[i];
     }
@@ -65,10 +60,14 @@ var mbp = function(ztPath, settings, callback) {
 
     //打包 html
     var packHtml = function (callback) {
+        var datas = {
+        };
 
         var htmlPath = cf.ztName + "/index.html";
         var htmlStr = fs.readFileSync(htmlPath, 'utf8');
-        var $divBox = $("<div/>").html(htmlStr);
+        datas.head = fl.getZtHead(htmlStr);
+        datas.body = fl.getZtHtml(htmlStr);
+        var $divBox = $("<div/>").html(datas.body);
         var $ztContainer = $divBox.find(".zt-container");
         var $imgs = $("img", $ztContainer);
         var floorClassName = cf.floorClassName;
@@ -130,7 +129,7 @@ var mbp = function(ztPath, settings, callback) {
             if ($cn && $cn.length && cnIndex == 0) {
 
 
-               
+
 
                 //背景图片的判断
                 if (isBgImg && bgImgHeight < vpHeight) {
@@ -164,7 +163,7 @@ var mbp = function(ztPath, settings, callback) {
                     isNeedLzImg = false;
                 }
 
-           
+
             }
 
 
@@ -190,22 +189,38 @@ var mbp = function(ztPath, settings, callback) {
                 $that.attr("src", "images/g.png");
 
             }
-            
+
             //不懒加载图片 恢复初始状态
             if ((!cf.mbLzImg || !isNeedLzImg) && $that.data(attr)){
 
                 $that.attr("src", $that.data(attr));
                 $that.removeAttr("data-"+attr);
             }
-        
+
 
         });
 
         htmlStr = $divBox.html();
+        datas.body = htmlStr;
 
-        fs.writeFile(htmlPath, htmlStr, (err) => {
-            if (err) throw err;
-            callback && callback();
+        //生成专题
+        fl.mkHtml({
+
+            //hbs模板 视图路径 本函数实际没有用到 但不写会报错
+            views: path.join(__dirname, cf.viewsPath),
+
+            //打包文件模板路径
+            tplpath: path.join(__dirname, cf.mbpTplPath),
+
+            //打包文件保存路径
+            savepath: path.normalize(htmlPath),
+
+
+            datas: datas,
+            callback: function () {
+              //console.log("mb端" + ztPath + "专题已打包。");
+              callback && callback();
+            }
         });
 
 

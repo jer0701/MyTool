@@ -44,6 +44,9 @@ cf.pcTplPath = cf.viewsPath + "pc.html";
 //pc端专题打包的模板路径
 cf.pcpTplPath = cf.viewsPath + "pcp.html";
 
+//mb端专题打包的模板路径
+cf.mbpTplPath = cf.viewsPath + "mbp.html";
+
 //生成专题模板保存的路径 PC端和移动端一致
 cf.tplSavePath = cf.ztName + "/tpl.html";
 
