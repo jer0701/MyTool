@@ -152,8 +152,20 @@ fl.getZtHead = function (html) {
         str = $1;
         return $1;
     });
-    console.log("html"+ html);
-    console.log("yy"+ str);
+    return str;
+}
+
+/*
+* 获取专题 body
+* @param {string} path 目录
+*/
+fl.getZtBody = function (html) {
+
+    var str = "";
+    html.replace(/<body>\s*([\s\S]*)\s*<\/body>/, function ($0, $1) {
+        str = $1;
+        return $1;
+    });
     return str;
 }
 
