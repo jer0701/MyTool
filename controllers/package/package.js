@@ -8,6 +8,7 @@ var getFileDir = require('./../../controllers/package/getDir.js'),
   pcp = require('./../../controllers/package/pcp.js'),
   mbp = require('./../../controllers/package/mbp.js'),
   mbb = require('./../../controllers/package/mbb.js'),
+  store = require('store2'),
   settings = {};
 
 //普通数组快速排序算法
@@ -124,12 +125,74 @@ var formatDate = function(Date, format) {
 };
 
 var initFileDir = function() {
+    var fileDir = store.get("fileDir");
+
+    var data = store.get("fileDir");
+    if (!data) return;
+
+    var length = data.length;
+    if (!length) return;
+    $(".Dir").html("");
+
+    //获取文件夹创建的年份和月份（通过文件夹的命名来获取）
+    var yearArr = [],
+      monthArr = [],
+      ctime, //临时变量存储文件夹的创建时间
+      dirpath; //临时变量存储文件夹的创建的年份和月份
+    for (var i = 0; i < length; i++) {
+      ctime = formatDate(new Date(data[i].ctime)).split(" ");
+      dirpath = ctime[0].split("-");
+      yearArr.push(dirpath[0]);
+      monthArr.push(dirpath[1]);
+
+    }
+
+    yearArr = quickSort(uniqueArr(yearArr));
+    monthArr = quickSort(uniqueArr(monthArr));
+    //console.log(monthArr);
+
+
+    var markM = 0; //月份标记位 1表示新的月份 0表示旧的月份
+    for (var y = 0, ylen = yearArr.length; y < ylen; y++) {
+      for (var m = 0, mlen = monthArr.length; m < mlen; m++) {
+        for (var i = 0; i < length; i++) {
+          if (i == 0) { //重新开始循环，那么必然是进入新的月份
+            markM = 1;
+          }
+
+          var value = data[i].dir;
+          ctime = formatDate(new Date(data[i].ctime)).split(" ");
+          dirPath = ctime[0].split("-");
+          //console.log(value);
+          if (dirPath[0] != yearArr[y]) continue;
+          if (dirPath[1] != monthArr[m]) continue;
+
+          if (markM) { //新的月份
+            markM = 0;
+            $(".Dir").append("<br><i>" + dirPath[0] + "-" + dirPath[1] + ":" + "</i>");
+          }
+          if (i % 2 == 0) {
+            $(".Dir").append("<br>");
+          }
+
+          $(".Dir").append("<label><input name='path' type='radio' value='" + value + "' />" + value + "<span class='path'>" + data[i].path + "</span></label>");
+
+        }
+
+      }
+
+    }
+
+
+};
+
+var selectFileDir = function() {
   getFileDir(function(fileDir) {
     if (!fileDir) return;
     //给data数组按照创建时间从最近到最远排列
     var data = quickSortJSON(fileDir);
     //$('textarea').text(data[0].dir);
-
+    store.set("fileDir", data);
     var length = data.length;
     if (!length) return;
     $(".Dir").html("");
@@ -188,7 +251,8 @@ var initFileDir = function() {
 };
 
 var init = function() {
-  $(".selectFile").bind("click", initFileDir);
+  initFileDir();
+  $(".selectFile").bind("click", selectFileDir);
   //pcp打包
   $("#pcp").bind("click", function(event) {
     /* Act on the event */
@@ -238,7 +302,7 @@ var init = function() {
         alert("选择的移动端目录不存在");
         return
       }
-      
+
       mbb(ztpath, settings, function() {
         $("p").text("移动端" + value + "恢复成功");
       });
