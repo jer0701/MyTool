@@ -10,6 +10,7 @@ const ipcMain = electron.ipcMain
 const shell = electron.shell
 const glob = require('glob')
 const cp = require('child_process')
+const autoUpdater = require('./auto-updater')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -51,7 +52,10 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', function () {
+  createWindow()
+  autoUpdater.initialize()
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -72,12 +76,12 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
- 
+
 ipcMain.on('loadurl-message', function(event, arg) {
     if(arg) {
       shell.openExternal(arg);
     }
-    
+
 })
 ipcMain.on('Home', function(event, arg) {
     require(path.join(__dirname, 'main-process/menus/application-menu.js'))();
@@ -87,7 +91,7 @@ ipcMain.on('Home', function(event, arg) {
       slashes: true
     }))
 
-    
+
 })
 
 function loadJS () {
@@ -95,6 +99,7 @@ function loadJS () {
   files.forEach(function (file) {
     require(file)
   })
+  autoUpdater.updateMenu()
 }
 
 var handleSquirrelEvent = function() {

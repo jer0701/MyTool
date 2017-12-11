@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>专题打包</title>
     <style type="text/css">
-      html,body{margin:0;padding:0;}
-      .left {width: 250px;height: 900px;float: left;overflow: scroll;overflow-x:hidden}
+      html,body{margin:0;padding:0;height: 100%;}
+      .left {width: 250px;height: 100%;float: left;overflow: scroll;overflow-x:hidden}
       .right{margin-left:258px}
       .right .wrap{padding-top: 22px;}
       .box{margin-bottom:15px;}
@@ -17,7 +17,7 @@
 
       .selectFile {display:block;margin-top: -15px;width: 170px;}
       .Dir{margin-top: -15px;}
-            
+
       .path{display: none;}
     </style>
     <script src="./../../assets/js/jquery-1.7.2.min.js"></script>
@@ -34,14 +34,14 @@
     </div>
     <div class="right">
         <div class="wrap">
-          <div class="box">  
+          <div class="box">
             <button id="pcp">PC打包</button>
             <button id="mbp" >MBP打包</button>
-            <button id="mbb">MBB恢复</button> 
+            <button id="mbb">MBB恢复</button>
           </div>
           <div class="box">
             <button id="copy" >复制代码</button>
-            <button id="clear">清空</button> 
+            <button id="clear">清空</button>
             <button id="preCheck">预览PC</button>
           </div>
           <pre>﻿<textarea id="copy-content"></textarea></pre>
@@ -52,6 +52,6 @@
 
    <script src="./../../controllers/package/renderer.js"></script>
    <script src="./../../controllers/package/package.js"></script>
-    
+
   </body>
 </html>

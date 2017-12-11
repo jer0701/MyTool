@@ -109,13 +109,14 @@ function addUpdateMenuItems (items, position) {
   let updateItems = [{
     label: `Version ${version}`,
     enabled: false
-  }/*, {
+  }, {
     label: '正在检查更新',
     enabled: false,
+    visible: false,
     key: 'checkingForUpdate'
   }, {
     label: '检查更新',
-    visible: false,
+    enabled: true,
     key: 'checkForUpdate',
     click: function () {
       require('electron').autoUpdater.checkForUpdates()
@@ -128,7 +129,7 @@ function addUpdateMenuItems (items, position) {
     click: function () {
       require('electron').autoUpdater.quitAndInstall()
     }
-  }*/]
+  }]
 
   items.splice.apply(items, [position, 0].concat(updateItems))
 }
