@@ -21,14 +21,6 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 1200, minWidth: 720, height: 600, show: false})
 
-  ipcMain.on('update', (evt, args) => {
-      var arr = args.split("+");
-      downloadpath = arr[0];
-      folderpath = arr[1];
-      evt.sender.send('tips',downloadpath);
-      mainWindow.webContents.downloadURL(downloadpath);
-  });
-
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),

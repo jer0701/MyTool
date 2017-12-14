@@ -3,9 +3,12 @@ const BrowserWindow = electron.BrowserWindow
 const Menu = electron.Menu
 const app = electron.app
 const path = require('path')
+const ipcMain = electron.ipcMain
 
 var state = 'no-update';
 var download = null;
+
+var win = BrowserWindow.getFocusedWindow();
 
 let template = [{
   label: '编辑',
@@ -126,32 +129,17 @@ function addUpdateMenuItems (items, position) {
       getUpdateData();
     }
   }, {
+    label: '正在下载更新',
+    enabled: false,
+    visible: false,
+    key: 'downloading',
+  }, {
     label: '重启并安装更新',
     enabled: true,
     visible: false,
     key: 'restartToUpdate',
     click: function () {
-      var downloadUrl = 'http://sale.flnet.com/zhuanti/tools/updates/' + download.version.replace(/[\r\n]/g,"") + '\/app.zip';
-      var downloadAddress = path.join(__dirname, './../../')
-      console.log(downloadUrl);
-      console.log(downloadAddress);
-      var mainWindow = BrowserWindow.getFocusedWindow();
-      mainWindow.webContents.downloadURL(downloadUrl);
-      mainWindow.webContents.session.on('will-download', (event, item, webContents) => {
-        // Set the save path, making Electron not to prompt a save dialog.
-        item.setSavePath(downloadAddress+`\\${item.getFilename()}`);
-        item.once('done', (event, state) => {
-          if (state === 'completed') {
-            console.log('Download successfully')
-            var fs = require("fs");
-            var unzip = require("unzip");
-            var zipDir = path.join(downloadAddress, '/app.zip')
-            fs.createReadStream(zipDir).pipe(unzip.Extract({ path: './resources' }));
-          } else {
-            alert("更新失败")
-          }
-        })
-      })
+      updateApp();
     }
   }]
 
@@ -186,10 +174,11 @@ var getUpdateData = function () {
     res.on('end', function () {
       // 成功回调
       download = querystring.parse(rawData);
-      if(electron.app.getVersion() !== download.version) {
+      if(electron.app.getVersion() != download.version.replace(/[\r\n]/g,"")) {
         state = 'installed';
         updateMenu();
       } else {
+        console.log("It's lastest version already!");
         state = 'no-update';
         updateMenu();
       }
@@ -202,6 +191,37 @@ var getUpdateData = function () {
   });
 };
 
+function updateApp() {
+    state = 'downloading';
+    updateMenu();
+    var downloadUrl = 'http://sale.flnet.com/zhuanti/tools/updates/' + download.version.replace(/[\r\n]/g,"") + '\/app.zip';
+    var downloadAddress = path.join(__dirname, './../../')
+
+    win.webContents.downloadURL(downloadUrl);
+    win.webContents.session.on('will-download', (event, item, webContents) => {
+      // Set the save path, making Electron not to prompt a save dialog.
+      item.setSavePath(downloadAddress+`\\${item.getFilename()}`);
+      item.once('done', (event, state) => {
+        if (state === 'completed') {
+          //console.log('Download successfully')
+          var fs = require("fs");
+          var unzip = require("unzip");
+          var zipDir = path.join(downloadAddress, '/app.zip')
+          var unzipExtractor = unzip.Extract({ path: './resources' })
+          unzipExtractor.on('error', function(err) {
+            throw err;
+          });
+          unzipExtractor.on('close', app.quit);
+          fs.createReadStream(zipDir).pipe(unzipExtractor); //unzip方法会直接覆盖原有的文件
+        } else {
+          //console.log('Download failed')
+          state = 'installed';
+          updateMenu();
+        }
+      })
+    })
+
+}
 
 function updateMenu () {
   var menu = Menu.getApplicationMenu()
@@ -216,6 +236,9 @@ function updateMenu () {
             break
           case 'checkingForUpdate':
             item.visible = state === 'checking'
+            break
+          case 'downloading':
+            item.visible = state === 'downloading'
             break
           case 'restartToUpdate':
             item.visible = state === 'installed'

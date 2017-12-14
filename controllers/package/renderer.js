@@ -102,9 +102,9 @@ function setMenu() {
   }, {
     label: '设置',
     submenu:[{
-      label: 'PC懒加载', type: 'checkbox', key: 'pcLzImg', checked: true 
+      label: 'PC懒加载', type: 'checkbox', key: 'pcLzImg', checked: true
     }, {
-      label: 'MB懒加载', type: 'checkbox', key: 'mbLzImg', checked: true 
+      label: 'MB懒加载', type: 'checkbox', key: 'mbLzImg', checked: true
     }],
     click: function() {
         //alert("nothing to set");
