@@ -10,7 +10,6 @@ const ipcMain = electron.ipcMain
 const shell = electron.shell
 const glob = require('glob')
 const cp = require('child_process')
-const autoUpdater = require('./auto-updater')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -21,6 +20,14 @@ loadJS()
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 1200, minWidth: 720, height: 600, show: false})
+
+  ipcMain.on('update', (evt, args) => {
+      var arr = args.split("+");
+      downloadpath = arr[0];
+      folderpath = arr[1];
+      evt.sender.send('tips',downloadpath);
+      mainWindow.webContents.downloadURL(downloadpath);
+  });
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -54,7 +61,6 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.on('ready', function () {
   createWindow()
-  autoUpdater.initialize()
 })
 
 // Quit when all windows are closed.
@@ -99,7 +105,6 @@ function loadJS () {
   files.forEach(function (file) {
     require(file)
   })
-  autoUpdater.updateMenu()
 }
 
 var handleSquirrelEvent = function() {

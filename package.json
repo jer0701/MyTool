@@ -1,6 +1,6 @@
 {
   "name": "electron",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "",
   "main": "main.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "electron-prebuilt": "^1.4.13",
     "electron-winstaller": "^2.6.3",
     "grunt": "^1.0.1",
-    "grunt-electron-installer": "^2.1.0",
+    "grunt-electron-installer": "^2.1.0"
   },
   "dependencies": {
     "async": "^2.6.0",
@@ -24,6 +24,7 @@
     "imageinfo": "^1.0.4",
     "store2": "^2.5.9",
     "through2": "^2.0.3",
-    "uglify-js": "^3.1.9"
+    "uglify-js": "^3.1.9",
+    "unzip": "^0.1.11"
   }
 }
