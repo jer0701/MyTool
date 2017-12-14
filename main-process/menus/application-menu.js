@@ -8,8 +8,6 @@ const ipcMain = electron.ipcMain
 var state = 'no-update';
 var download = null;
 
-var win = BrowserWindow.getFocusedWindow();
-
 let template = [{
   label: '编辑',
   submenu: [{
@@ -197,6 +195,7 @@ function updateApp() {
     var downloadUrl = 'http://sale.flnet.com/zhuanti/tools/updates/' + download.version.replace(/[\r\n]/g,"") + '\/app.zip';
     var downloadAddress = path.join(__dirname, './../../')
 
+    var win = BrowserWindow.getFocusedWindow();
     win.webContents.downloadURL(downloadUrl);
     win.webContents.session.on('will-download', (event, item, webContents) => {
       // Set the save path, making Electron not to prompt a save dialog.
@@ -206,12 +205,15 @@ function updateApp() {
           //console.log('Download successfully')
           var fs = require("fs");
           var unzip = require("unzip");
-          var zipDir = path.join(downloadAddress, '/app.zip')
-          var unzipExtractor = unzip.Extract({ path: './resources' })
+          var zipDir = path.join(downloadAddress, '/app.zip');
+          var unzipExtractor = unzip.Extract({ path: './resources' });
           unzipExtractor.on('error', function(err) {
             throw err;
           });
-          unzipExtractor.on('close', app.quit);
+          unzipExtractor.on('close', function(){
+            app.relaunch({args: process.argv.slice(1).concat(['--relaunch'])});
+            app.exit(0);
+          });
           fs.createReadStream(zipDir).pipe(unzipExtractor); //unzip方法会直接覆盖原有的文件
         } else {
           //console.log('Download failed')
